@@ -1,0 +1,17 @@
+{
+  "name": "Ogeadstest",
+  "version": "1.0.0",
+  "description": "Proxy server for Ogads Offer API (Serverless on Vercel)",
+  "main": "index.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "node-fetch": "^3.4.0"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "type": "module",
+  "keywords": ["ogads", "proxy", "vercel", "serverless", "cpa"]
+}

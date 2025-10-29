@@ -1,9 +1,10 @@
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
-  // CORS supaya bisa dipanggil dari Blogger
+  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
 
   const OGADS_KEY = process.env.OGADS_API_KEY;
   if (!OGADS_KEY) {
@@ -14,15 +15,19 @@ export default async function handler(req, res) {
 
   // Ambil IP visitor
   let ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
-  if (!ip || ip === '127.0.0.1' || ip === '::1') ip = '8.8.8.8';
+  const country = req.query.country || '';
+
+  if (!ip || ip === '127.0.0.1' || ip === '::1') {
+    if (country === 'US') ip = '8.8.8.8';
+    else if (country === 'PH') ip = '203.177.39.0';
+    else if (country === 'SG') ip = '43.250.0.0';
+    else ip = '103.27.7.0'; // default Asia
+  }
 
   const user_agent = req.headers['user-agent'] || 'Mozilla/5.0';
 
   const params = new URLSearchParams({ ip, user_agent });
-
-  // Ambil country dari query parameter ?country=ID
-  const country = req.query.country;
-  if (country) {
+  if (country && country !== 'ALL') {
     params.append('country', country);
   }
 

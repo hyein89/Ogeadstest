@@ -19,6 +19,13 @@ export default async function handler(req, res) {
   const user_agent = req.headers['user-agent'] || 'Mozilla/5.0';
 
   const params = new URLSearchParams({ ip, user_agent });
+
+  // Ambil country dari query parameter ?country=ID
+  const country = req.query.country;
+  if (country) {
+    params.append('country', country);
+  }
+
   const url = `${ENDPOINT}?${params.toString()}`;
 
   try {

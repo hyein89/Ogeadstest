@@ -10,7 +10,7 @@
     "node-fetch": "^3.4.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "type": "module",
   "keywords": ["ogads", "proxy", "vercel", "serverless", "cpa"]
